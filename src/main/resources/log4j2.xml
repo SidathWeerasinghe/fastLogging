@@ -32,8 +32,9 @@
         <Chronicle name="CHRONICLE">
             <path>/home/sidath/Desktop/dust/dev-setup/</path>
             <chronicleCfg>
-                <blockSize>128</blockSize>
-                <bufferCapacity>256</bufferCapacity>
+                <blockSize>64</blockSize>
+                <bufferCapacity>64</bufferCapacity>
+                <rollCycle>MINUTELY</rollCycle>
             </chronicleCfg>
         </Chronicle>
 
