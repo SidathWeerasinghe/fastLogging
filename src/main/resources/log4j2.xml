@@ -30,7 +30,7 @@
         </Console>
 
         <Chronicle name="CHRONICLE">
-            <path>/home/sidath/Desktop/dust/dev-setup/</path>
+            <path>/home/pradeep/Documents/projects/log2/</path>
             <chronicleCfg>
                 <blockSize>64</blockSize>
                 <bufferCapacity>64</bufferCapacity>
@@ -38,9 +38,28 @@
             </chronicleCfg>
         </Chronicle>
 
-        <File name="FILE" fileName="/home/sidath/Desktop/dust/dev-setup/test.log">
+        <Chronicle name="CHRONICLE2">
+            <path>/home/pradeep/Documents/projects/log3/</path>
+            <chronicleCfg>
+                <blockSize>64</blockSize>
+                <bufferCapacity>64</bufferCapacity>
+                <rollCycle>DAILY</rollCycle>
+            </chronicleCfg>
+        </Chronicle>
+
+        <Chronicle name="CHRONICLE3">
+            <path>/home/pradeep/Documents/projects/log2/</path>
+            <chronicleCfg>
+                <blockSize>64</blockSize>
+                <bufferCapacity>64</bufferCapacity>
+                <rollCycle>MINUTELY</rollCycle>
+            </chronicleCfg>
+        </Chronicle>
+
+
+        <!--<File name="FILE" fileName="/home/pradeep/Documents/projects/log2/test.log">
             <PatternLayout><pattern>%d [%t] %p %c - %m %ex%n</pattern></PatternLayout>
-        </File>
+        </File>-->
 
     </Appenders>
 
@@ -57,6 +76,14 @@
         <logger name="chronicle" level="info" additivity="true">
             <appender-ref ref="CHRONICLE"/>
         </logger>
+        <logger name="chronicle2" level="debug" additivity="true">
+            <appender-ref ref="CHRONICLE2"/>
+        </logger>
+
+        <logger name="chronicle3" level="error" additivity="true">
+            <appender-ref ref="CHRONICLE3"/>
+        </logger>
+
         <logger name="file" level="info" additivity="true">
             <appender-ref ref="FILE"/>
         </logger>
