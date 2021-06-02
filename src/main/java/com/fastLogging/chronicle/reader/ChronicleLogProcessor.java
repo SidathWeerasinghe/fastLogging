@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fastLogging.reader;
+package com.fastLogging.chronicle.reader;
 
 import net.openhft.chronicle.logger.ChronicleLogLevel;
 import org.jetbrains.annotations.Nullable;

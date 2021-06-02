@@ -1,4 +1,4 @@
-package com.fastLogging.writer;
+package com.fastLogging.chronicle.writer;
 
 import java.io.File;
 import java.io.IOException;

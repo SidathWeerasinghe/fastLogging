@@ -1,11 +1,6 @@
-package com.fastLogging.reader;
+package com.fastLogging.chronicle.reader;
 
-import net.openhft.chronicle.core.OS;
-import net.openhft.chronicle.core.util.Time;
 import net.openhft.chronicle.wire.WireType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import net.openhft.chronicle.core.io.IOTools;
 
 import java.io.IOException;
 

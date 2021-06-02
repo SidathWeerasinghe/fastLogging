@@ -1,4 +1,4 @@
-package com.fastLogging.writer;
+package com.fastLogging.chronicle.writer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
