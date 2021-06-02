@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2014-2017  Chronicle Software
+  ~
+  ~ http://www.chronicle.software
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+<configuration packages="net.openhft.chronicle.logger.log4j2">
+
+    <!-- ******************************************************************* -->
+    <!-- APPENDERS                                                           -->
+    <!-- ******************************************************************* -->
+
+    <Appenders>
+
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="[CHRONOLOGY] [%-5p] %c - %m%n%throwable{none}"/>
+        </Console>
+
+        <Chronicle name="CHRONICLE">
+            <path>/home/pradeep/Documents/projects/log2/</path>
+            <chronicleCfg>
+                <blockSize>64</blockSize>
+                <bufferCapacity>64</bufferCapacity>
+                <rollCycle>MINUTELY</rollCycle>
+            </chronicleCfg>
+        </Chronicle>
+
+        <Chronicle name="CHRONICLE2">
+            <path>/home/pradeep/Documents/projects/log3/</path>
+            <chronicleCfg>
+                <blockSize>64</blockSize>
+                <bufferCapacity>64</bufferCapacity>
+                <rollCycle>DAILY</rollCycle>
+            </chronicleCfg>
+        </Chronicle>
+
+        <Chronicle name="CHRONICLE3">
+            <path>/home/pradeep/Documents/projects/log2/</path>
+            <chronicleCfg>
+                <blockSize>64</blockSize>
+                <bufferCapacity>64</bufferCapacity>
+                <rollCycle>MINUTELY</rollCycle>
+            </chronicleCfg>
+        </Chronicle>
+
+
+        <!--<File name="FILE" fileName="/home/pradeep/Documents/projects/log2/test.log">
+            <PatternLayout><pattern>%d [%t] %p %c - %m %ex%n</pattern></PatternLayout>
+        </File>-->
+
+    </Appenders>
+
+    <!-- ******************************************************************* -->
+    <!-- LOGGERS                                                             -->
+    <!-- ******************************************************************* -->
+
+    <loggers>
+
+        <root level="all">
+            <appender-ref ref="STDOUT"/>
+        </root>
+
+        <logger name="chronicle" level="info" additivity="true">
+            <appender-ref ref="CHRONICLE"/>
+        </logger>
+        <logger name="chronicle2" level="debug" additivity="true">
+            <appender-ref ref="CHRONICLE2"/>
+        </logger>
+
+        <logger name="chronicle3" level="error" additivity="true">
+            <appender-ref ref="CHRONICLE3"/>
+        </logger>
+
+        <logger name="file" level="info" additivity="true">
+            <appender-ref ref="FILE"/>
+        </logger>
+
+        <!-- *************************************************************** -->
+        <!--                                                                 -->
+        <!-- *************************************************************** -->
+
+        <logger name="net.openhft" level="info"/>
+
+    </loggers>
+
+</configuration>

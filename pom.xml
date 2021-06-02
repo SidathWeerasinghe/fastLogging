@@ -23,6 +23,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <log4j.version>2.11.2</log4j.version>
     </properties>
     <dependencies>
 
@@ -31,6 +32,22 @@
             <groupId>net.openhft</groupId>
             <artifactId>chronicle-logger-log4j-2</artifactId>
             <version>4.21ea40</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!--Log4j-2.9 and higher require disruptor-3.3.4.jar or higher on the classpath. Prior to Log4j-2.9, disruptor-3.0.0.jar or higher was required.-->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.3.4</version>
         </dependency>
     </dependencies>
 
