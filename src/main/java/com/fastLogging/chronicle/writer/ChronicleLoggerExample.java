@@ -10,12 +10,13 @@ public class ChronicleLoggerExample {
         ChronicleLoggerExample testLog = new ChronicleLoggerExample();
         int i = 0;
 
-        while (true)
+        while(true)
         {
-            testLog.writeMessageChronicleLogger1("file Location 1#");
-            testLog.writeMessageChronicleLogger2("file Location 2#");
+            testLog.writeMessageChronicleLogger1(i);
+            //testLog.writeMessageChronicleLogger2(i);
+
             try {
-                Thread.sleep(10);
+              //  Thread.sleep(200);
                 i++;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -23,25 +24,47 @@ public class ChronicleLoggerExample {
         }
     }
 
-    private void writeMessageChronicleLogger1(String parameter) {
+    private void writeMessageChronicleLogger1(int parameter) {
+
         final Logger chronicleLogger = LoggerFactory.getLogger("chronicle");
+        final Logger chronicleLogger1 = LoggerFactory.getLogger("file");
+
+
         if(chronicleLogger.isDebugEnabled()){
             chronicleLogger.debug("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger debug log: " + parameter);
+            chronicleLogger1.debug("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger debug log: " + parameter);
+
         }
 
-        if(chronicleLogger.isInfoEnabled()){
+
             chronicleLogger.info("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger info log: " + parameter);
+        chronicleLogger1.info("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger info log: " + parameter);
+
+
+        if(chronicleLogger.isWarnEnabled()) {
+            chronicleLogger.warn("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger warn log: " + parameter);
+            chronicleLogger1.warn("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger warn log: " + parameter);
+
         }
 
-        chronicleLogger.warn("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger warn log: " + parameter);
-        chronicleLogger.error("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger error log: " + parameter);
-        chronicleLogger.trace("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger trace log: " + parameter);
+        if(chronicleLogger.isErrorEnabled()) {
+            chronicleLogger.error("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger error log: " + parameter);
+            chronicleLogger1.error("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger error log: " + parameter);
 
+        }
+
+        if(chronicleLogger.isTraceEnabled()) {
+            chronicleLogger.trace("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger trace log: " + parameter);
+            chronicleLogger1.trace("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger trace log: " + parameter);
+
+        }
     }
 
 
-    private void writeMessageChronicleLogger2(String parameter) {
+    private void writeMessageChronicleLogger2(int parameter) {
+
         final Logger chronicleLogger = LoggerFactory.getLogger("chronicle2");
+
         if(chronicleLogger.isDebugEnabled()){
             chronicleLogger.debug("This is ChronicleLogger2 debug log: " + parameter);
         }
@@ -50,10 +73,17 @@ public class ChronicleLoggerExample {
             chronicleLogger.info("This is  ChronicleLogger2 info log: " + parameter);
         }
 
-        chronicleLogger.warn("This is ChronicleLogger2 warn log: " + parameter);
-        chronicleLogger.error("This is ChronicleLogger2 error log: " + parameter);
-        chronicleLogger.trace("This is ChronicleLogger2 trace log: " + parameter);
+        if(chronicleLogger.isWarnEnabled()) {
+            chronicleLogger.warn("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger warn log: " + parameter);
+        }
 
+        if(chronicleLogger.isErrorEnabled()) {
+            chronicleLogger.error("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger error log: " + parameter);
+        }
+
+        if(chronicleLogger.isTraceEnabled()) {
+            chronicleLogger.trace("Axiata Digital Lab will make world best software. The future is today. This is ChronicleLogger trace log: " + parameter);
+        }
     }
 
 
