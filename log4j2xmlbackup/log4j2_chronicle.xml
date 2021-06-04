@@ -88,6 +88,15 @@
             <appender-ref ref="FILE"/>
         </logger>
 
+<!--        <logger name="com.fastLogging.chronicle.writer.pacakge2" level="error" includeLocation="true" additivity="false">
+            <AppenderRef ref="CHRONICLE"/>
+        </logger>
+
+
+        <logger name="com.fastLogging.chronicle.writer.pacakge2.ChronicleLoggerPacakge2" level="info" includeLocation="true" additivity="false">
+            <AppenderRef ref="CHRONICLE"/>
+        </logger>-->
+
         <!-- *************************************************************** -->
         <!--                                                                 -->
         <!-- *************************************************************** -->
