@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" shutdownHook="disable">
+<Configuration status="debug">
     <Appenders>
         <Console name="Console-Appender" target="SYSTEM_OUT">
             <PatternLayout>
@@ -25,10 +25,28 @@
                                  filePattern="archive/logs/rollingrandomaccessfile.log.%d{yyyy-MM-dd-hh-mm}.gz">
             <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB"/>
+                <OnStartupTriggeringPolicy />  <!-- a new log file is created every time the JVM starts -->
+                <TimeBasedTriggeringPolicy />	 <!-- the log file is rolled based on a date/time pattern -->
+                <SizeBasedTriggeringPolicy size="1MB"/>	<!--  the file is rolled when it reaches a certain size -->
             </Policies>
+
             <DefaultRolloverStrategy max="30"/>
         </RollingRandomAccessFile>
+        <!-- http appender -->
+
+        <Http name="Http" url="http://localhost:8080/api/singleTSingleL">
+            <Property name="X-Java-Runtime" value="$${java:runtime}" />
+            <JsonLayout properties="true"/>
+        </Http>
+
+        <!-- failover  appender -->
+
+        <Failover name="FailoverAppender" primary="Http">
+            <Failovers>
+                <AppenderRef ref="Console-Appender" />
+                <AppenderRef ref="Rolling-Random-Access-File-Appender" />
+            </Failovers>
+        </Failover>
     </Appenders>
     <Loggers>
         <!--PACKAGE LEVEL LOGGING for com.fastLogging.log4j2-->
@@ -43,7 +61,7 @@
             <AppenderRef ref="Rolling-Random-Access-File-Appender"/>
         </Logger>
         <!--CLASS LEVEL LOGGING for com.fastLogging.log4j2.packageTwo.AsyncAppenderClassTwo-->
-        <Logger name="com.fastLogging.log4j2.packageTwo.AsyncAppenderClassTwo" level="info" additivity="false">
+        <Logger name="com.fastLogging.log4j2.packageTwo.AsyncAppenderClassTwo" level="debug" includeLocation="true" additivity="false">
             <!--<AppenderRef ref="File-Appender"/>-->
             <AppenderRef ref="Rolling-Random-Access-File-Appender"/>
         </Logger>

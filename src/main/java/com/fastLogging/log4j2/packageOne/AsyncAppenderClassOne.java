@@ -14,9 +14,12 @@ public class AsyncAppenderClassOne {
      */
     public static void main(String[] args) {
         AsyncAppenderClassOne testLog = new AsyncAppenderClassOne();
-        AsyncAppenderClassTwo classTwo = new AsyncAppenderClassTwo();
-            testLog.methodOne("file method 1#");
-            classTwo.methodTwo("file method 2#");
+        //AsyncAppenderClassTwo classTwo = new AsyncAppenderClassTwo();
+        int i = 0;
+        while(true) {
+            testLog.methodOne("file method 1#" + i++);
+            //classTwo.methodTwo("file method 2#");
+        }
 
     }
 
