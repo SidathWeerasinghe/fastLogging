@@ -28,6 +28,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.helpers.MessageFormatter;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,8 +101,12 @@ public class ChronicleLogReader {
      * @param processor user-provided processor called for each log message
      * @param waitForIt whether to wait for more data or stop after EOF reached
      */
-    public void processLogs(@NotNull ChronicleLogProcessor processor, boolean waitForIt) {
+    public void processLogs(@NotNull ChronicleLogProcessor processor, boolean waitForIt, long index) {
         ExcerptTailer tailer = cq.createTailer();
+        tailer.moveToIndex(index);
+
+        BufferedWriter indexWriter = null;
+
         for (; ; ) {
             try (DocumentContext dc = tailer.readingDocument()) {
                 Wire wire = dc.wire();
@@ -131,6 +138,21 @@ public class ChronicleLogReader {
                 }
                 Object[] args = argsL.toArray(new Object[argsL.size()]);
                 processor.process(timestamp, level, threadName, loggerName, message, th, args);
+
+                long currentIndex = tailer.index();
+                System.out.println("Tailer index        " + currentIndex);
+                //write current index to a file
+                indexWriter= new BufferedWriter(new FileWriter("/home/chishan/projects/fastLogging/index/indexFile.txt", false));
+                indexWriter.write(Long.toString(tailer.index()));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    indexWriter.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
