@@ -20,7 +20,9 @@ package com.fastLogging.chronicle.reader;
 
 import net.openhft.chronicle.logger.ChronicleLogLevel;
 import net.openhft.chronicle.queue.ChronicleQueue;
+import net.openhft.chronicle.queue.ExcerptAppender;
 import net.openhft.chronicle.queue.ExcerptTailer;
+import net.openhft.chronicle.queue.impl.single.SingleChronicleQueueBuilder;
 import net.openhft.chronicle.wire.DocumentContext;
 import net.openhft.chronicle.wire.Wire;
 import net.openhft.chronicle.wire.WireType;
@@ -28,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.helpers.MessageFormatter;
 
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +103,21 @@ public class ChronicleLogReader {
      */
     public void processLogs(@NotNull ChronicleLogProcessor processor, boolean waitForIt) {
         ExcerptTailer tailer = cq.createTailer();
+        tailer.moveToIndex(116195276426863470L);
+
+
+
+
+
+       // cq.lastAcknowledgedIndexReplicated();
+      //  cq.lastIndexReplicated();
+
+
+
         for (; ; ) {
+            // TODO write to doc tailer.index()
             try (DocumentContext dc = tailer.readingDocument()) {
+
                 Wire wire = dc.wire();
                 if (wire == null)
                     if (waitForIt) {
@@ -116,10 +132,16 @@ public class ChronicleLogReader {
                     }
 
                 long timestamp = wire.read("ts").int64();
+
                 ChronicleLogLevel level = wire.read("level").asEnum(ChronicleLogLevel.class);
                 String threadName = wire.read("threadName").text();
                 String loggerName = wire.read("loggerName").text();
                 String message = wire.read("message").text();
+
+
+                // write to filebeat
+                //if file beat not accepting the logs then assume reader has got interrupts.
+
                 Throwable th = wire.hasMore() ? wire.read("throwable").throwable(false) : null;
                 List<Object> argsL = new ArrayList<>();
                 if (wire.hasMore()) {
@@ -131,7 +153,33 @@ public class ChronicleLogReader {
                 }
                 Object[] args = argsL.toArray(new Object[argsL.size()]);
                 processor.process(timestamp, level, threadName, loggerName, message, th, args);
+
+                System.out.println("level        " + level);
+                System.out.println("level        " + tailer.index());
+                System.out.println("ailer.state()    " + tailer.state());
+
+
+                /*System.out.println("threadName" + threadName);
+                System.out.println("loggerName" + loggerName);
+                System.out.println("message" + message);
+                System.out.println("th" + th);*/
+
+               // System.out.println("wire.readEventNumber()   " + wire.readEventNumber());
             }
         }
     }
+
+/*    public void readFrom4MB () {
+        try (final ChronicleQueue qTailer = ChronicleQueue.singleBuilder(tmpDir, wireType).appendLock()  checkInterrupts(HOURLY).build()) {
+
+            ChronicleQueue.singleBuilder(tmpDir, wireType).
+            try (DocumentContext documentContext2 = qTailer.createTailer().readingDocument()) {
+                String str = documentContext2.wire().read("somekey").text();
+                assertEquals("somevalue", str);
+            }
+        }
+    }*/
+
+
+    //ChronicleQueue.singleBuilder(tmpDir, wireType).checkInterrupts
 }

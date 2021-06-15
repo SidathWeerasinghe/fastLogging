@@ -9,7 +9,7 @@ public class ChronicleLoggerPacakge2 {
 
     public void writeMessageChronicleLogger1(int parameter) {
 
-        final Logger chronicleLogger = LoggerFactory.getLogger(ChronicleLoggerPacakge2.class);
+        final Logger chronicleLogger = LoggerFactory.getLogger("chronicle2");
 
 
 

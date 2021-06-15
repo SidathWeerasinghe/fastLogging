@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug" shutdownHook="disable">
+<Configuration status="warn" name="MyApp" packages="com.fastLogging.log4j2">
     <Appenders>
         <Console name="Console-Appender" target="SYSTEM_OUT">
             <PatternLayout>
@@ -8,47 +8,31 @@
                 </pattern>>
             </PatternLayout>
         </Console>
-        <!--<File name="File-Appender" fileName="logs/app.log" >
+        <MemoryMappedFile name="MyFile" fileName="logs/MemoryMappedFile.log">
             <PatternLayout>
-                <pattern>
-                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
-                </pattern>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
-        </File>-->
-        <!--asynchronous logging won’t be complete without the mention of the random access file appender.
-         A random access file is similar to the file appender we used, except it’s always buffered with a default buffer size of 256 * 1024 bytes.
-         The buffer size, as of the current release, is not configurable. This means that once the buffer is pre-allocated with a size at first use,
-         it will never grow or shrink during the life of the system.
-        You can override the default size with the AsyncLoggerConfig.RingBufferSize system property-->
-        <RollingRandomAccessFile name="Rolling-Random-Access-File-Appender"
-                                 fileName="logs/rollingrandomaccessfile.log"
-                                 filePattern="archive/logs/rollingrandomaccessfile.log.%d{yyyy-MM-dd-hh-mm}.gz">
-            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="30"/>
-        </RollingRandomAccessFile>
+        </MemoryMappedFile>
     </Appenders>
     <Loggers>
+        <Root level="error">
+            <AppenderRef ref="MyFile"/>
+        </Root>
         <!--PACKAGE LEVEL LOGGING for com.fastLogging.log4j2-->
         <!-- if class level logging enable with different log level, it will get apply class level without considering package level-->
         <Logger  name="com.fastLogging.log4j2" level="info" includeLocation="true" additivity="false">
             <!--<AppenderRef ref="File-Appender"/>-->
-            <AppenderRef ref="Rolling-Random-Access-File-Appender"/>
+            <AppenderRef ref="MyFile"/>
         </Logger>
-        <!--CLASS LEVEL LOGGING for com.fastLogging.log4j2.packageOne.AsyncAppenderClassOne-->
-        <Logger name="com.fastLogging.log4j2.packageOne.AsyncAppenderClassOne" level="info" additivity="false">
+        <!--CLASS LEVEL LOGGING for com.fastLogging.log4j2.packageOne.MemoryMapFileAppender-->
+        <Logger name="com.fastLogging.log4j2.packageOne.MemoryMapFileAppender" level="debug" includeLocation="true" additivity="false">
             <!--<AppenderRef ref="File-Appender"/>-->
-            <AppenderRef ref="Rolling-Random-Access-File-Appender"/>
+            <AppenderRef ref="MyFile"/>
         </Logger>
         <!--CLASS LEVEL LOGGING for com.fastLogging.log4j2.packageTwo.AsyncAppenderClassTwo-->
-        <Logger name="com.fastLogging.log4j2.packageTwo.AsyncAppenderClassTwo" level="info" additivity="false">
-            <!--<AppenderRef ref="File-Appender"/>-->
-            <AppenderRef ref="Rolling-Random-Access-File-Appender"/>
-        </Logger>
-        <Root level="debug">
-            <AppenderRef ref="Console-Appender"/>
-        </Root>
+        <!--<Logger name="com.fastLogging.log4j2.packageTwo.AsyncAppenderClassTwo" level="debug" includeLocation="true" additivity="false">
+            &lt;!&ndash;<AppenderRef ref="File-Appender"/>&ndash;&gt;
+            <AppenderRef ref="MyFile"/>
+        </Logger>-->
     </Loggers>
 </Configuration>
